@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Turto apžvalga</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root{
+  --bg:#F3F4F7;
+  --surface:#FFFFFF;
+  --ink:#12141C;
+  --ink-soft:#6B7080;
+  --ink-faint:#9CA0AE;
+  --border:#E7E8EE;
+  --accent:#2F6F4F;
+  --danger:#DC2626;
+
+  --c-cash:#64748B;
+  --c-cash-bg:#EEF0F3;
+  --c-bank:#2563EB;
+  --c-bank-bg:#EAF0FE;
+  --c-kripto:#D97706;
+  --c-kripto-bg:#FCF1E1;
+  --c-ibkr:#059669;
+  --c-ibkr-bg:#E7F6F0;
+}
+
+*{box-sizing:border-box;}
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter', sans-serif;
+  min-height:100vh;
+  padding:32px 16px 80px;
+}
+
+.page{
+  max-width:640px;
+  margin:0 auto;
+}
+
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  margin-bottom:24px;
+}
+
+.eyebrow{
+  font-size:12px;
+  font-weight:600;
+  color:var(--ink-faint);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin:0 0 4px;
+}
+
+.title{
+  font-family:'Manrope', sans-serif;
+  font-weight:800;
+  font-size:22px;
+  margin:0;
+}
+
+.updated{
+  font-size:12px;
+  color:var(--ink-faint);
+  text-align:right;
+  padding-top:4px;
+  white-space:nowrap;
+}
+
+.hero{
+  background:var(--surface);
+  border-radius:20px;
+  border:1px solid var(--border);
+  padding:24px;
+  display:flex;
+  align-items:center;
+  gap:24px;
+  margin-bottom:20px;
+}
+
+.ring-wrap{
+  position:relative;
+  width:120px;
+  height:120px;
+  flex:0 0 auto;
+}
+
+.ring{
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  transition:background 0.35s ease;
+}
+
+.ring-hole{
+  position:absolute;
+  top:14px;
+  left:14px;
+  width:92px;
+  height:92px;
+  border-radius:50%;
+  background:var(--surface);
+}
+
+.hero-figures{
+  flex:1 1 auto;
+  min-width:0;
+}
+
+.hero-label{
+  font-size:12px;
+  color:var(--ink-soft);
+  margin:0 0 2px;
+}
+
+.hero-amount{
+  font-family:'Manrope', sans-serif;
+  font-weight:800;
+  font-size:34px;
+  letter-spacing:-0.01em;
+  line-height:1.1;
+  font-variant-numeric:tabular-nums;
+}
+
+.hero-amount .cur{
+  font-size:18px;
+  color:var(--ink-soft);
+  font-weight:600;
+  margin-left:4px;
+}
+
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 16px;
+  margin-top:10px;
+}
+
+.legend-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  color:var(--ink-soft);
+}
+
+.dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  flex:0 0 auto;
+}
+
+.categories{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+.card{
+  background:var(--surface);
+  border-radius:16px;
+  border:1px solid var(--border);
+  padding:18px 18px 14px;
+}
+
+.card-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.icon-badge{
+  width:32px;
+  height:32px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+
+.icon-badge svg{
+  width:17px;
+  height:17px;
+}
+
+.card-name{
+  font-family:'Manrope', sans-serif;
+  font-weight:700;
+  font-size:15px;
+  flex:1 1 auto;
+}
+
+.card-subtotal{
+  font-size:14px;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+}
+
+.refresh-btn{
+  border:none;
+  background:transparent;
+  color:var(--ink-faint);
+  cursor:pointer;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+}
+
+.refresh-btn:hover{
+  background:var(--bg);
+  color:var(--ink-soft);
+}
+
+.refresh-btn svg{
+  width:15px;
+  height:15px;
+}
+
+.refresh-btn.spinning svg{
+  animation:spin 0.8s linear infinite;
+}
+
+@keyframes spin{
+  from{transform:rotate(0deg);}
+  to{transform:rotate(360deg);}
+}
+
+.price-status{
+  font-size:11px;
+  color:var(--ink-faint);
+  margin:-6px 0 12px;
+}
+
+.price-status.error{
+  color:var(--danger);
+}
+
+.row{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 0;
+  border-radius:8px;
+}
+
+.row-name{
+  border:none;
+  background:transparent;
+  font-family:'Inter', sans-serif;
+  font-size:16px;
+  color:var(--ink);
+  min-width:0;
+  flex:1 1 auto;
+  padding:10px 10px;
+  border-radius:8px;
+}
+
+.row-name:focus, .row-name:hover{
+  background:var(--bg);
+  outline:none;
+}
+
+.row-amount{
+  border:none;
+  background:var(--bg);
+  font-family:'Inter', sans-serif;
+  font-size:16px;
+  font-weight:600;
+  color:var(--ink);
+  text-align:right;
+  width:104px;
+  flex:0 0 auto;
+  padding:10px 10px;
+  border-radius:8px;
+  font-variant-numeric:tabular-nums;
+}
+
+.row-amount:focus{
+  outline:2px solid var(--border);
+}
+
+.row-cur{
+  font-size:13px;
+  color:var(--ink-faint);
+  flex:0 0 auto;
+}
+
+.row-del{
+  border:none;
+  background:transparent;
+  color:var(--ink-faint);
+  font-size:18px;
+  cursor:pointer;
+  flex:0 0 auto;
+  width:32px;
+  height:32px;
+  line-height:1;
+  border-radius:50%;
+}
+
+.row-del:hover{
+  color:var(--danger);
+  background:#FEECEC;
+}
+
+.card-foot{
+  margin-top:6px;
+}
+
+.add-btn{
+  border:1px dashed var(--border);
+  background:transparent;
+  font-family:'Inter', sans-serif;
+  font-size:13px;
+  font-weight:600;
+  color:var(--ink-faint);
+  cursor:pointer;
+  padding:11px 12px;
+  border-radius:8px;
+  width:100%;
+}
+
+.add-btn:hover{
+  border-color:var(--ink-faint);
+  color:var(--ink-soft);
+}
+
+.crypto-row{
+  padding:10px 8px;
+  border-radius:10px;
+}
+
+.crypto-row:hover{
+  background:var(--bg);
+}
+
+.crypto-row-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:6px;
+}
+
+.coin-name{
+  font-size:14px;
+  font-weight:600;
+}
+
+.coin-symbol{
+  font-size:12px;
+  color:var(--ink-faint);
+  font-weight:500;
+  margin-left:4px;
+}
+
+.crypto-value{
+  font-size:14px;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+  color:var(--c-kripto);
+}
+
+.crypto-row-bottom{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.qty-input{
+  background:var(--surface);
+  border:1px solid var(--border);
+  font-family:'Inter', sans-serif;
+  font-size:16px;
+  font-weight:600;
+  color:var(--ink);
+  text-align:right;
+  width:118px;
+  flex:0 0 auto;
+  padding:10px 10px;
+  border-radius:8px;
+  font-variant-numeric:tabular-nums;
+}
+
+.qty-input:focus{
+  outline:2px solid var(--border);
+}
+
+.qty-label{
+  font-size:12px;
+  color:var(--ink-faint);
+  flex:0 0 auto;
+}
+
+.price-hint{
+  font-size:12px;
+  color:var(--ink-faint);
+  flex:1 1 auto;
+  text-align:right;
+}
+
+.note{
+  font-size:12px;
+  color:var(--ink-faint);
+  text-align:center;
+  margin-top:24px;
+}
+
+.toast{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:var(--ink);
+  color:#fff;
+  font-family:'Inter', sans-serif;
+  font-size:12px;
+  font-weight:500;
+  padding:9px 16px;
+  border-radius:999px;
+  opacity:0;
+  transform:translateY(6px);
+  transition:opacity .25s ease, transform .25s ease;
+  pointer-events:none;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+@media (max-width:480px){
+  .hero{flex-direction:column;align-items:flex-start;}
+  .top{flex-direction:column;gap:4px;}
+  .updated{text-align:left;padding-top:0;}
+  .crypto-row-bottom{flex-wrap:wrap;}
+  .price-hint{text-align:left;width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <div class="top">
+    <div>
+      <p class="eyebrow">Asmeniniai finansai</p>
+      <h1 class="title">Turto apžvalga</h1>
+    </div>
+    <div class="updated" id="updatedLabel">—</div>
+  </div>
+
+  <div class="hero">
+    <div class="ring-wrap">
+      <div class="ring" id="ring"></div>
+      <div class="ring-hole"></div>
+    </div>
+    <div class="hero-figures">
+      <p class="hero-label">Bendras turtas</p>
+      <div class="hero-amount"><span id="heroAmount">0</span><span class="cur">EUR</span></div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </div>
+
+  <div class="categories" id="categories"></div>
+
+  <p class="note">Duomenys saugomi automatiškai šiame prisijungime. Kriptovaliutų kainos gaunamos iš CoinGecko.</p>
+</div>
+
+<div class="toast" id="toast">Išsaugota</div>
+
+<script>
+const STORAGE_KEY = 'turto-knyga-data';
+const REFRESH_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0114.13-3.36L23 10"></path><path d="M1 14l5.36 4.36A9 9 0 0020.49 15"></path></svg>';
+
+const ICONS = {
+  grynieji: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle></svg>',
+  bankai: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M4 21V9l8-5 8 5v12"></path><path d="M9 21v-6h6v6"></path></svg>',
+  kripto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 8v8"></path><path d="M15 8v8"></path><path d="M9 12h6"></path></svg>',
+  ibkr: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg>'
+};
+
+const COLORS = {
+  grynieji: { fg:'var(--c-cash)', bg:'var(--c-cash-bg)' },
+  bankai:   { fg:'var(--c-bank)', bg:'var(--c-bank-bg)' },
+  kripto:   { fg:'var(--c-kripto)', bg:'var(--c-kripto-bg)' },
+  ibkr:     { fg:'var(--c-ibkr)', bg:'var(--c-ibkr-bg)' }
+};
+
+function cryptoId(){
+  return Math.random().toString(36).slice(2,10);
+}
+
+const defaultData = {
+  categories: [
+    { id:'grynieji', name:'Grynieji pinigai', items:[
+      { id:cryptoId(), name:'Piniginė', amount:0 }
+    ]},
+    { id:'bankai', name:'Bankai', items:[
+      { id:cryptoId(), name:'Revolut', amount:35 },
+      { id:cryptoId(), name:'Luminor', amount:900 }
+    ]},
+    { id:'ibkr', name:'IBKR', items:[
+      { id:cryptoId(), name:'IBKR', amount:5375 }
+    ]}
+  ],
+  crypto: {
+    items: [
+      { id:cryptoId(), coinId:'bitcoin', symbol:'BTC', name:'Bitcoin', quantity:0 },
+      { id:cryptoId(), coinId:'ethereum', symbol:'ETH', name:'Ethereum', quantity:0 },
+      { id:cryptoId(), coinId:'ravencoin', symbol:'RVN', name:'Ravencoin', quantity:0 }
+    ],
+    prices:{},
+    pricesUpdatedAt:null,
+    priceError:false
+  },
+  lastUpdated:null
+};
+
+let data = null;
+let saveTimer = null;
+
+async function loadData(){
+  try{
+    const res = await window.storage.get(STORAGE_KEY, false);
+    data = (res && res.value) ? JSON.parse(res.value) : defaultData;
+  } catch(e){
+    data = defaultData;
+  }
+
+  data.categories = (data.categories || []).filter(c => c.id !== 'kripto');
+  if(!data.categories.length){
+    data.categories = defaultData.categories;
+  }
+  if(!data.crypto || !Array.isArray(data.crypto.items)){
+    data.crypto = defaultData.crypto;
+  }
+
+  render();
+  fetchPrices();
+}
+
+function scheduleSave(){
+  data.lastUpdated = new Date().toISOString();
+  updateUpdatedLabel();
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveNow, 500);
+}
+
+async function saveNow(){
+  try{
+    const result = await window.storage.set(STORAGE_KEY, JSON.stringify(data), false);
+    if(result) showToast();
+  } catch(e){
+    console.error('Nepavyko išsaugoti', e);
+  }
+}
+
+function showToast(){
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1400);
+}
+
+function updateUpdatedLabel(){
+  const el = document.getElementById('updatedLabel');
+  if(!data.lastUpdated){ el.textContent = '—'; return; }
+  const d = new Date(data.lastUpdated);
+  el.textContent = 'Atnaujinta ' + d.toLocaleDateString('lt-LT', { day:'2-digit', month:'2-digit', year:'numeric' }) +
+                    ' ' + d.toLocaleTimeString('lt-LT', { hour:'2-digit', minute:'2-digit' });
+}
+
+function formatEUR(n){
+  const r = Math.round((n + Number.EPSILON) * 100) / 100;
+  return r.toLocaleString('lt-LT', { minimumFractionDigits: r % 1 === 0 ? 0 : 2, maximumFractionDigits: 2 });
+}
+
+function formatPrice(p){
+  if(p === undefined || p === null) return '—';
+  if(p >= 100) return p.toLocaleString('lt-LT', { minimumFractionDigits:2, maximumFractionDigits:2 });
+  if(p >= 1) return p.toLocaleString('lt-LT', { minimumFractionDigits:2, maximumFractionDigits:4 });
+  return p.toLocaleString('lt-LT', { minimumFractionDigits:4, maximumFractionDigits:6 });
+}
+
+function categoryTotal(cat){
+  return cat.items.reduce((s, it) => s + (Number(it.amount) || 0), 0);
+}
+
+function cryptoItemValue(item){
+  const price = data.crypto.prices[item.coinId];
+  if(typeof price !== 'number') return 0;
+  return (Number(item.quantity) || 0) * price;
+}
+
+function cryptoTotal(){
+  return data.crypto.items.reduce((s, it) => s + cryptoItemValue(it), 0);
+}
+
+function grandTotal(){
+  return data.categories.reduce((s, cat) => s + categoryTotal(cat), 0) + cryptoTotal();
+}
+
+async function fetchPrices(){
+  const btn = document.getElementById('cryptoRefresh');
+  if(btn) btn.classList.add('spinning');
+
+  try{
+    const ids = data.crypto.items.map(i => i.coinId).join(',');
+    const res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=eur`);
+    if(!res.ok) throw new Error('bad response');
+    const json = await res.json();
+
+    let anyFound = false;
+    data.crypto.items.forEach(item => {
+      const entry = json[item.coinId];
+      if(entry && typeof entry.eur === 'number'){
+        data.crypto.prices[item.coinId] = entry.eur;
+        anyFound = true;
+      }
+    });
+
+    if(!anyFound) throw new Error('no prices found');
+    data.crypto.pricesUpdatedAt = new Date().toISOString();
+    data.crypto.priceError = false;
+  } catch(e){
+    data.crypto.priceError = true;
+  }
+
+  if(btn) btn.classList.remove('spinning');
+  scheduleSave();
+  render();
+}
+
+function render(){
+  const wrap = document.getElementById('categories');
+  wrap.innerHTML = '';
+
+  data.categories.forEach(cat => {
+    const colors = COLORS[cat.id] || COLORS.grynieji;
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const head = document.createElement('div');
+    head.className = 'card-head';
+    head.innerHTML = `
+      <div class="icon-badge" style="background:${colors.bg};color:${colors.fg}">${ICONS[cat.id] || ICONS.grynieji}</div>
+      <div class="card-name">${cat.name}</div>
+      <div class="card-subtotal" style="color:${colors.fg}">${formatEUR(categoryTotal(cat))} €</div>
+    `;
+    card.appendChild(head);
+
+    cat.items.forEach(item => card.appendChild(buildRow(cat, item)));
+
+    const foot = document.createElement('div');
+    foot.className = 'card-foot';
+    const addBtn = document.createElement('button');
+    addBtn.className = 'add-btn';
+    addBtn.textContent = '+ pridėti įrašą';
+    addBtn.addEventListener('click', () => {
+      cat.items.push({ id:cryptoId(), name:'Naujas įrašas', amount:0 });
+      scheduleSave();
+      render();
+    });
+    foot.appendChild(addBtn);
+    card.appendChild(foot);
+
+    wrap.appendChild(card);
+  });
+
+  wrap.appendChild(buildCryptoCard());
+
+  refreshTotals();
+}
+
+function buildCryptoCard(){
+  const colors = COLORS.kripto;
+  const card = document.createElement('div');
+  card.className = 'card';
+
+  const head = document.createElement('div');
+  head.className = 'card-head';
+  head.innerHTML = `
+    <div class="icon-badge" style="background:${colors.bg};color:${colors.fg}">${ICONS.kripto}</div>
+    <div class="card-name">Kriptovaliuta</div>
+    <div class="card-subtotal" id="cryptoSubtotal" style="color:${colors.fg}">${formatEUR(cryptoTotal())} €</div>
+  `;
+  const refreshBtn = document.createElement('button');
+  refreshBtn.className = 'refresh-btn';
+  refreshBtn.id = 'cryptoRefresh';
+  refreshBtn.setAttribute('aria-label', 'Atnaujinti kainas');
+  refreshBtn.innerHTML = REFRESH_ICON;
+  refreshBtn.addEventListener('click', fetchPrices);
+  head.appendChild(refreshBtn);
+  card.appendChild(head);
+
+  const status = document.createElement('div');
+  status.className = 'price-status' + (data.crypto.priceError ? ' error' : '');
+  status.id = 'priceStatus';
+  status.textContent = data.crypto.priceError
+    ? 'Nepavyko atnaujinti kainų. Bandykite dar kartą.'
+    : (data.crypto.pricesUpdatedAt
+        ? 'Kainos atnaujintos ' + new Date(data.crypto.pricesUpdatedAt).toLocaleTimeString('lt-LT', { hour:'2-digit', minute:'2-digit' })
+        : 'Gaunamos kainos...');
+  card.appendChild(status);
+
+  data.crypto.items.forEach(item => card.appendChild(buildCryptoRow(item)));
+
+  return card;
+}
+
+function buildCryptoRow(item){
+  const row = document.createElement('div');
+  row.className = 'crypto-row';
+
+  const top = document.createElement('div');
+  top.className = 'crypto-row-top';
+  top.innerHTML = `
+    <span><span class="coin-name">${item.name}</span><span class="coin-symbol">${item.symbol}</span></span>
+    <span class="crypto-value">${formatEUR(cryptoItemValue(item))} €</span>
+  `;
+  row.appendChild(top);
+
+  const bottom = document.createElement('div');
+  bottom.className = 'crypto-row-bottom';
+
+  const qtyInput = document.createElement('input');
+  qtyInput.className = 'qty-input';
+  qtyInput.type = 'number';
+  qtyInput.step = 'any';
+  qtyInput.value = item.quantity;
+  qtyInput.addEventListener('input', () => {
+    item.quantity = qtyInput.value === '' ? 0 : parseFloat(qtyInput.value);
+    scheduleSave();
+    refreshTotals();
+  });
+
+  const qtyLabel = document.createElement('span');
+  qtyLabel.className = 'qty-label';
+  qtyLabel.textContent = 'vnt.';
+
+  const priceHint = document.createElement('span');
+  priceHint.className = 'price-hint';
+  const price = data.crypto.prices[item.coinId];
+  priceHint.textContent = typeof price === 'number'
+    ? `1 ${item.symbol} ≈ ${formatPrice(price)} €`
+    : `1 ${item.symbol} ≈ —`;
+
+  bottom.appendChild(qtyInput);
+  bottom.appendChild(qtyLabel);
+  bottom.appendChild(priceHint);
+  row.appendChild(bottom);
+
+  return row;
+}
+
+function buildRow(cat, item){
+  const row = document.createElement('div');
+  row.className = 'row';
+
+  const nameInput = document.createElement('input');
+  nameInput.className = 'row-name';
+  nameInput.value = item.name;
+  nameInput.addEventListener('input', () => {
+    item.name = nameInput.value;
+    scheduleSave();
+  });
+
+  const amountInput = document.createElement('input');
+  amountInput.className = 'row-amount';
+  amountInput.type = 'number';
+  amountInput.step = '0.01';
+  amountInput.value = item.amount;
+  amountInput.addEventListener('input', () => {
+    item.amount = amountInput.value === '' ? 0 : parseFloat(amountInput.value);
+    scheduleSave();
+    refreshTotals();
+  });
+
+  const cur = document.createElement('span');
+  cur.className = 'row-cur';
+  cur.textContent = '€';
+
+  const del = document.createElement('button');
+  del.className = 'row-del';
+  del.setAttribute('aria-label', 'Pašalinti įrašą');
+  del.textContent = '×';
+  del.addEventListener('click', () => {
+    cat.items = cat.items.filter(i => i.id !== item.id);
+    scheduleSave();
+    render();
+  });
+
+  row.appendChild(nameInput);
+  row.appendChild(amountInput);
+  row.appendChild(cur);
+  row.appendChild(del);
+  return row;
+}
+
+function refreshTotals(){
+  data.categories.forEach((cat, idx) => {
+    const cards = document.querySelectorAll('#categories .card');
+    const card = cards[idx];
+    if(!card) return;
+    const colors = COLORS[cat.id] || COLORS.grynieji;
+    const sub = card.querySelector('.card-subtotal');
+    if(sub){
+      sub.textContent = formatEUR(categoryTotal(cat)) + ' €';
+      sub.style.color = colors.fg;
+    }
+  });
+
+  const cryptoSub = document.getElementById('cryptoSubtotal');
+  if(cryptoSub) cryptoSub.textContent = formatEUR(cryptoTotal()) + ' €';
+
+  document.querySelectorAll('.crypto-row').forEach((row, idx) => {
+    const item = data.crypto.items[idx];
+    if(!item) return;
+    const valueEl = row.querySelector('.crypto-value');
+    if(valueEl) valueEl.textContent = formatEUR(cryptoItemValue(item)) + ' €';
+  });
+
+  const total = grandTotal();
+  document.getElementById('heroAmount').textContent = formatEUR(total);
+
+  const ring = document.getElementById('ring');
+  const legend = document.getElementById('legend');
+  legend.innerHTML = '';
+
+  const segments = data.categories.map(cat => ({ name:cat.name, id:cat.id, value:categoryTotal(cat) }));
+  segments.push({ name:'Kriptovaliuta', id:'kripto', value:cryptoTotal() });
+
+  if(total <= 0){
+    ring.style.background = 'var(--border)';
+  } else {
+    let acc = 0;
+    const stops = [];
+    segments.forEach(seg => {
+      if(seg.value <= 0) return;
+      const colors = COLORS[seg.id] || COLORS.grynieji;
+      const start = (acc / total) * 360;
+      acc += seg.value;
+      const end = (acc / total) * 360;
+      stops.push(`${colors.fg} ${start}deg ${end}deg`);
+
+      const item = document.createElement('div');
+      item.className = 'legend-item';
+      item.innerHTML = `<span class="dot" style="background:${colors.fg}"></span>${seg.name} · ${Math.round((seg.value/total)*100)}%`;
+      legend.appendChild(item);
+    });
+    ring.style.background = stops.length ? `conic-gradient(${stops.join(',')})` : 'var(--border)';
+  }
+
+  updateUpdatedLabel();
+}
+
+loadData();
+</script>
+
+</body>
+</html>
