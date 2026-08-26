@@ -412,6 +412,267 @@ body{
   text-align:right;
 }
 
+.ibkr-divider{
+  margin:16px 0 10px;
+  padding-top:14px;
+  border-top:1px dashed var(--border);
+}
+
+.ibkr-divider-label{
+  font-size:11px;
+  font-weight:700;
+  color:var(--ink-faint);
+  text-transform:uppercase;
+  letter-spacing:0.08em;
+  margin-bottom:2px;
+}
+
+.ibkr-divider-hint{
+  font-size:11px;
+  color:var(--ink-faint);
+  margin-bottom:12px;
+  line-height:1.4;
+}
+
+.position-card{
+  background:var(--bg);
+  border-radius:12px;
+  padding:2px 12px;
+  margin-bottom:10px;
+}
+
+.position-head{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 0;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+
+.chevron{
+  width:16px;
+  height:16px;
+  color:var(--ink-faint);
+  flex:0 0 auto;
+  transition:transform .2s ease;
+  display:flex;
+}
+
+.chevron.open{
+  transform:rotate(90deg);
+}
+
+.position-titles{
+  flex:1 1 auto;
+  min-width:0;
+}
+
+.position-ticker{
+  font-size:14px;
+  font-weight:700;
+}
+
+.position-sub{
+  font-size:12px;
+  color:var(--ink-faint);
+  margin-top:2px;
+}
+
+.position-value{
+  font-size:14px;
+  font-weight:700;
+  color:var(--c-ibkr);
+  flex:0 0 auto;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+
+.position-body{
+  display:none;
+  padding:2px 0 14px;
+}
+
+.position-body.open{
+  display:block;
+}
+
+.price-field{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:8px;
+  margin-bottom:6px;
+}
+
+.price-field label{
+  font-size:12px;
+  color:var(--ink-soft);
+  flex:0 0 auto;
+  width:100%;
+}
+
+.price-field .mini-input{
+  width:110px;
+  flex:0 0 auto;
+}
+
+.price-field .refresh-btn{
+  width:30px;
+  height:30px;
+}
+
+.price-hint-small{
+  font-size:11px;
+  color:var(--ink-faint);
+  margin:0 0 14px;
+  line-height:1.4;
+}
+
+.price-hint-small.error{
+  color:var(--danger);
+}
+
+.purchases-label{
+  font-size:11px;
+  font-weight:700;
+  color:var(--ink-faint);
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  margin:6px 0 6px;
+}
+
+.purchase-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  padding:8px 0;
+  border-bottom:1px dotted var(--border);
+}
+
+.purchase-info{
+  min-width:0;
+}
+
+.purchase-date{
+  font-size:12px;
+  color:var(--ink-soft);
+  font-weight:600;
+}
+
+.purchase-detail{
+  font-size:12px;
+  color:var(--ink-faint);
+  margin-top:1px;
+}
+
+.gain-pill{
+  font-size:12px;
+  font-weight:700;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+}
+
+.purchase-del{
+  border:none;
+  background:transparent;
+  color:var(--ink-faint);
+  font-size:16px;
+  cursor:pointer;
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  flex:0 0 auto;
+}
+
+.purchase-del:hover{
+  color:var(--danger);
+  background:#FEECEC;
+}
+
+.empty-hint{
+  font-size:12px;
+  color:var(--ink-faint);
+  padding:8px 0;
+}
+
+.add-purchase{
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px dashed var(--border);
+}
+
+.add-purchase-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:8px;
+}
+
+.add-purchase-grid .mini-input:first-child{
+  grid-column:1 / -1;
+}
+
+.mini-input{
+  background:var(--surface);
+  border:1px solid var(--border);
+  font-family:'Inter', sans-serif;
+  font-size:16px;
+  color:var(--ink);
+  padding:10px 10px;
+  border-radius:8px;
+  width:100%;
+}
+
+.mini-input:focus{
+  outline:2px solid var(--border);
+}
+
+.mini-btn{
+  border:none;
+  background:var(--c-ibkr);
+  color:#fff;
+  font-family:'Inter', sans-serif;
+  font-size:13px;
+  font-weight:700;
+  padding:11px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  width:100%;
+}
+
+.mini-btn:hover{
+  opacity:0.92;
+}
+
+.remove-position{
+  margin-top:12px;
+  border:none;
+  background:transparent;
+  color:var(--danger);
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  padding:6px 0;
+}
+
+.add-position-row{
+  display:flex;
+  gap:8px;
+  margin-top:4px;
+}
+
+.add-position-row .mini-input{
+  flex:1 1 auto;
+}
+
+.add-position-row .mini-btn{
+  width:auto;
+  white-space:nowrap;
+  flex:0 0 auto;
+}
+
 .note{
   font-size:12px;
   color:var(--ink-faint);
@@ -483,17 +744,20 @@ body{
 <script>
 const STORAGE_KEY = 'turto-knyga-data';
 const REFRESH_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"></path><path d="M1 20v-6h6"></path><path d="M3.51 9a9 9 0 0114.13-3.36L23 10"></path><path d="M1 14l5.36 4.36A9 9 0 0020.49 15"></path></svg>';
+const CHEVRON_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>';
+
+// Which ETF positions are expanded — kept in memory only, so everything
+// always starts collapsed on load, never persisted as "open".
+const expandedPositions = new Set();
 
 const ICONS = {
-  grynieji: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle></svg>',
-  bankai: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M4 21V9l8-5 8 5v12"></path><path d="M9 21v-6h6v6"></path></svg>',
+  pinigai: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"></rect><circle cx="12" cy="12" r="3"></circle></svg>',
   kripto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9 8v8"></path><path d="M15 8v8"></path><path d="M9 12h6"></path></svg>',
   ibkr: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"></path><path d="M15 7h6v6"></path></svg>'
 };
 
 const COLORS = {
-  grynieji: { fg:'var(--c-cash)', bg:'var(--c-cash-bg)' },
-  bankai:   { fg:'var(--c-bank)', bg:'var(--c-bank-bg)' },
+  pinigai:  { fg:'var(--c-bank)', bg:'var(--c-bank-bg)' },
   kripto:   { fg:'var(--c-kripto)', bg:'var(--c-kripto-bg)' },
   ibkr:     { fg:'var(--c-ibkr)', bg:'var(--c-ibkr-bg)' }
 };
@@ -502,17 +766,31 @@ function cryptoId(){
   return Math.random().toString(36).slice(2,10);
 }
 
+function migrateCategories(cats){
+  cats = cats.filter(c => c.id !== 'kripto');
+  const grynieji = cats.find(c => c.id === 'grynieji');
+  const bankai = cats.find(c => c.id === 'bankai');
+  if(grynieji || bankai){
+    const merged = {
+      id:'pinigai',
+      name:'Pinigai',
+      items:[ ...(grynieji ? grynieji.items : []), ...(bankai ? bankai.items : []) ]
+    };
+    const rest = cats.filter(c => c.id !== 'grynieji' && c.id !== 'bankai');
+    return [merged, ...rest];
+  }
+  return cats;
+}
+
 const defaultData = {
   categories: [
-    { id:'grynieji', name:'Grynieji pinigai', items:[
-      { id:cryptoId(), name:'Piniginė', amount:0 }
-    ]},
-    { id:'bankai', name:'Bankai', items:[
-      { id:cryptoId(), name:'Revolut', amount:35 },
-      { id:cryptoId(), name:'Luminor', amount:900 }
+    { id:'pinigai', name:'Pinigai', items:[
+      { id:cryptoId(), name:'Piniginė', amount:0 },
+      { id:cryptoId(), name:'Revolut', amount:0 },
+      { id:cryptoId(), name:'Luminor', amount:0 }
     ]},
     { id:'ibkr', name:'IBKR', items:[
-      { id:cryptoId(), name:'IBKR', amount:5375 }
+      { id:cryptoId(), name:'IBKR', amount:0 }
     ]}
   ],
   crypto: {
@@ -525,6 +803,9 @@ const defaultData = {
     pricesUpdatedAt:null,
     priceError:false
   },
+  ibkrPositions: [
+    { id:cryptoId(), ticker:'VUAA', currentPrice:null, priceUpdatedAt:null, priceError:false, purchases:[] }
+  ],
   lastUpdated:null
 };
 
@@ -539,16 +820,20 @@ async function loadData(){
     data = defaultData;
   }
 
-  data.categories = (data.categories || []).filter(c => c.id !== 'kripto');
+  data.categories = migrateCategories(data.categories || []);
   if(!data.categories.length){
     data.categories = defaultData.categories;
   }
   if(!data.crypto || !Array.isArray(data.crypto.items)){
     data.crypto = defaultData.crypto;
   }
+  if(!Array.isArray(data.ibkrPositions)){
+    data.ibkrPositions = defaultData.ibkrPositions;
+  }
 
   render();
   fetchPrices();
+  fetchAllPositionPrices();
 }
 
 function scheduleSave(){
@@ -607,8 +892,91 @@ function cryptoTotal(){
   return data.crypto.items.reduce((s, it) => s + cryptoItemValue(it), 0);
 }
 
+function formatQty(n){
+  return Number(n || 0).toLocaleString('lt-LT', { maximumFractionDigits:6 });
+}
+
+function formatPct(n){
+  return Number(n || 0).toLocaleString('lt-LT', { minimumFractionDigits:1, maximumFractionDigits:1 });
+}
+
+function positionQty(pos){
+  return pos.purchases.reduce((s, p) => s + (Number(p.quantity) || 0), 0);
+}
+
+function positionCost(pos){
+  return pos.purchases.reduce((s, p) => s + (Number(p.quantity) || 0) * (Number(p.price) || 0), 0);
+}
+
+function positionValue(pos){
+  const qty = positionQty(pos);
+  if(typeof pos.currentPrice === 'number'){
+    return qty * pos.currentPrice;
+  }
+  return positionCost(pos);
+}
+
+function positionGain(pos){
+  if(typeof pos.currentPrice !== 'number') return null;
+  return positionValue(pos) - positionCost(pos);
+}
+
+function positionGainPct(pos){
+  const cost = positionCost(pos);
+  const gain = positionGain(pos);
+  if(gain === null || cost <= 0) return null;
+  return (gain / cost) * 100;
+}
+
+function ibkrPositionsTotal(){
+  return (data.ibkrPositions || []).reduce((s, p) => s + positionValue(p), 0);
+}
+
+function ibkrCardTotal(cat){
+  return categoryTotal(cat) + ibkrPositionsTotal();
+}
+
 function grandTotal(){
-  return data.categories.reduce((s, cat) => s + categoryTotal(cat), 0) + cryptoTotal();
+  return data.categories.reduce((s, cat) => s + (cat.id === 'ibkr' ? ibkrCardTotal(cat) : categoryTotal(cat)), 0) + cryptoTotal();
+}
+
+async function fetchAllPositionPrices(){
+  const positions = data.ibkrPositions || [];
+  for(const pos of positions){
+    await fetchPositionPrice(pos, { skipSave:true, skipRender:true });
+  }
+  scheduleSave();
+  render();
+}
+
+async function fetchPositionPrice(pos, opts){
+  opts = opts || {};
+  const btn = document.querySelector(`.position-card[data-id="${pos.id}"] .refresh-btn`);
+  if(btn) btn.classList.add('spinning');
+
+  try{
+    const symbol = pos.ticker.trim().toLowerCase() + '.uk';
+    const target = `https://stooq.com/q/l/?s=${encodeURIComponent(symbol)}&f=sd2t2ohlcv&h&e=csv`;
+    const proxied = `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`;
+    const res = await fetch(proxied);
+    if(!res.ok) throw new Error('bad response');
+    const text = await res.text();
+    const lines = text.trim().split('\n');
+    if(lines.length < 2) throw new Error('no data');
+    const cols = lines[1].split(',');
+    const close = parseFloat(cols[6]);
+    if(!isFinite(close) || close <= 0) throw new Error('invalid price');
+
+    pos.currentPrice = close;
+    pos.priceUpdatedAt = new Date().toISOString();
+    pos.priceError = false;
+  } catch(e){
+    pos.priceError = true;
+  }
+
+  if(btn) btn.classList.remove('spinning');
+  if(!opts.skipSave) scheduleSave();
+  if(!opts.skipRender) render();
 }
 
 async function fetchPrices(){
@@ -647,16 +1015,18 @@ function render(){
   wrap.innerHTML = '';
 
   data.categories.forEach(cat => {
-    const colors = COLORS[cat.id] || COLORS.grynieji;
+    const colors = COLORS[cat.id] || COLORS.pinigai;
     const card = document.createElement('div');
     card.className = 'card';
+
+    const subtotalValue = cat.id === 'ibkr' ? ibkrCardTotal(cat) : categoryTotal(cat);
 
     const head = document.createElement('div');
     head.className = 'card-head';
     head.innerHTML = `
-      <div class="icon-badge" style="background:${colors.bg};color:${colors.fg}">${ICONS[cat.id] || ICONS.grynieji}</div>
+      <div class="icon-badge" style="background:${colors.bg};color:${colors.fg}">${ICONS[cat.id] || ICONS.pinigai}</div>
       <div class="card-name">${cat.name}</div>
-      <div class="card-subtotal" style="color:${colors.fg}">${formatEUR(categoryTotal(cat))} €</div>
+      <div class="card-subtotal" style="color:${colors.fg}">${formatEUR(subtotalValue)} €</div>
     `;
     card.appendChild(head);
 
@@ -674,6 +1044,10 @@ function render(){
     });
     foot.appendChild(addBtn);
     card.appendChild(foot);
+
+    if(cat.id === 'ibkr'){
+      card.appendChild(buildIbkrPositionsSection());
+    }
 
     wrap.appendChild(card);
   });
@@ -764,6 +1138,277 @@ function buildCryptoRow(item){
   return row;
 }
 
+function buildIbkrPositionsSection(){
+  const wrap = document.createElement('div');
+  wrap.className = 'ibkr-divider';
+  wrap.innerHTML = `
+    <div class="ibkr-divider-label">ETF pozicijos</div>
+    <div class="ibkr-divider-hint">Atskira nuo balanso aukščiau — pridėk konkrečius ETF pirkimus (pvz. VUAA) ir sek jų vertę bei prieaugį.</div>
+  `;
+
+  (data.ibkrPositions || []).forEach(pos => {
+    wrap.appendChild(buildPositionCard(pos));
+  });
+
+  const addRow = document.createElement('div');
+  addRow.className = 'add-position-row';
+
+  const tickerInput = document.createElement('input');
+  tickerInput.className = 'mini-input';
+  tickerInput.placeholder = 'pvz. VUAA';
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'mini-btn';
+  addBtn.textContent = '+ pridėti ETF';
+  addBtn.addEventListener('click', () => {
+    const ticker = tickerInput.value.trim();
+    if(!ticker) return;
+    const newPos = { id:cryptoId(), ticker:ticker.toUpperCase(), currentPrice:null, priceUpdatedAt:null, priceError:false, purchases:[] };
+    data.ibkrPositions.push(newPos);
+    expandedPositions.add(newPos.id);
+    scheduleSave();
+    render();
+    fetchPositionPrice(newPos);
+  });
+
+  addRow.appendChild(tickerInput);
+  addRow.appendChild(addBtn);
+  wrap.appendChild(addRow);
+
+  return wrap;
+}
+
+function buildPositionCard(pos){
+  const card = document.createElement('div');
+  card.className = 'position-card';
+  card.setAttribute('data-id', pos.id);
+
+  const isOpen = expandedPositions.has(pos.id);
+
+  const head = document.createElement('div');
+  head.className = 'position-head';
+  head.innerHTML = `
+    <span class="chevron${isOpen ? ' open' : ''}">${CHEVRON_ICON}</span>
+    <div class="position-titles">
+      <div class="position-ticker">${pos.ticker}</div>
+      <div class="position-sub">${positionSubText(pos)}</div>
+    </div>
+    <div class="position-value">${formatEUR(positionValue(pos))} €</div>
+  `;
+  head.addEventListener('click', () => {
+    if(expandedPositions.has(pos.id)) expandedPositions.delete(pos.id);
+    else expandedPositions.add(pos.id);
+    render();
+  });
+  card.appendChild(head);
+
+  const body = document.createElement('div');
+  body.className = 'position-body' + (isOpen ? ' open' : '');
+
+  const priceField = document.createElement('div');
+  priceField.className = 'price-field';
+  const priceLabel = document.createElement('label');
+  priceLabel.textContent = 'Dabartinė kaina';
+  const priceInput = document.createElement('input');
+  priceInput.className = 'mini-input';
+  priceInput.type = 'number';
+  priceInput.step = '0.01';
+  priceInput.value = typeof pos.currentPrice === 'number' ? pos.currentPrice : '';
+  priceInput.placeholder = '0.00';
+  priceInput.addEventListener('input', () => {
+    pos.currentPrice = priceInput.value === '' ? null : parseFloat(priceInput.value);
+    pos.priceUpdatedAt = new Date().toISOString();
+    scheduleSave();
+    updatePositionDisplay(pos);
+  });
+  const priceCur = document.createElement('span');
+  priceCur.className = 'row-cur';
+  priceCur.textContent = '€';
+
+  const priceRefreshBtn = document.createElement('button');
+  priceRefreshBtn.className = 'refresh-btn';
+  priceRefreshBtn.setAttribute('aria-label', 'Atnaujinti kainą');
+  priceRefreshBtn.innerHTML = REFRESH_ICON;
+  priceRefreshBtn.addEventListener('click', () => fetchPositionPrice(pos));
+
+  priceField.appendChild(priceLabel);
+  priceField.appendChild(priceInput);
+  priceField.appendChild(priceCur);
+  priceField.appendChild(priceRefreshBtn);
+  body.appendChild(priceField);
+
+  const priceStatus = document.createElement('div');
+  priceStatus.className = 'price-hint-small' + (pos.priceError ? ' error' : '');
+  priceStatus.textContent = pos.priceError
+    ? 'Nepavyko automatiškai gauti kainos (bandoma per stooq.com, LSE ETF, tikeris + ".uk"). Gali pataisyti ranka arba spausti ↻.'
+    : (pos.priceUpdatedAt
+        ? 'Kaina gauta automatiškai ' + new Date(pos.priceUpdatedAt).toLocaleTimeString('lt-LT', { hour:'2-digit', minute:'2-digit' })
+        : 'Gaunama kaina...');
+  body.appendChild(priceStatus);
+
+  const purchasesLabel = document.createElement('div');
+  purchasesLabel.className = 'purchases-label';
+  purchasesLabel.textContent = 'Pirkimų istorija';
+  body.appendChild(purchasesLabel);
+
+  if(pos.purchases.length === 0){
+    const empty = document.createElement('div');
+    empty.className = 'empty-hint';
+    empty.textContent = 'Kol kas nėra įrašytų pirkimų.';
+    body.appendChild(empty);
+  } else {
+    pos.purchases
+      .slice()
+      .sort((a, b) => (a.date < b.date ? 1 : -1))
+      .forEach(lot => body.appendChild(buildPurchaseRow(pos, lot)));
+  }
+
+  const addPurchase = document.createElement('div');
+  addPurchase.className = 'add-purchase';
+
+  const grid = document.createElement('div');
+  grid.className = 'add-purchase-grid';
+
+  const dateInput = document.createElement('input');
+  dateInput.className = 'mini-input';
+  dateInput.type = 'date';
+  dateInput.value = new Date().toISOString().slice(0, 10);
+
+  const qtyInput = document.createElement('input');
+  qtyInput.className = 'mini-input';
+  qtyInput.type = 'number';
+  qtyInput.step = 'any';
+  qtyInput.placeholder = 'Kiekis';
+
+  const priceLotInput = document.createElement('input');
+  priceLotInput.className = 'mini-input';
+  priceLotInput.type = 'number';
+  priceLotInput.step = '0.01';
+  priceLotInput.placeholder = 'Kaina (€)';
+
+  grid.appendChild(dateInput);
+  grid.appendChild(qtyInput);
+  grid.appendChild(priceLotInput);
+  addPurchase.appendChild(grid);
+
+  const confirmBtn = document.createElement('button');
+  confirmBtn.className = 'mini-btn';
+  confirmBtn.textContent = '+ pridėti pirkimą';
+  confirmBtn.addEventListener('click', () => {
+    const q = parseFloat(qtyInput.value);
+    const p = parseFloat(priceLotInput.value);
+    if(!q || q <= 0) return;
+    pos.purchases.push({
+      id:cryptoId(),
+      date: dateInput.value || new Date().toISOString().slice(0, 10),
+      quantity:q,
+      price: isNaN(p) ? 0 : p
+    });
+    expandedPositions.add(pos.id);
+    scheduleSave();
+    render();
+  });
+  addPurchase.appendChild(confirmBtn);
+  body.appendChild(addPurchase);
+
+  const removeBtn = document.createElement('button');
+  removeBtn.className = 'remove-position';
+  removeBtn.textContent = 'Pašalinti šį ETF';
+  removeBtn.addEventListener('click', () => {
+    data.ibkrPositions = data.ibkrPositions.filter(p => p.id !== pos.id);
+    expandedPositions.delete(pos.id);
+    scheduleSave();
+    render();
+  });
+  body.appendChild(removeBtn);
+
+  card.appendChild(body);
+  return card;
+}
+
+function positionSubText(pos){
+  const qty = positionQty(pos);
+  const gain = positionGain(pos);
+  const gainPct = positionGainPct(pos);
+  if(qty <= 0) return 'Nėra pirkimų';
+  if(gain === null) return `${formatQty(qty)} vnt. · įvesk dabartinę kainą`;
+  const sign = gain >= 0 ? '+' : '';
+  const color = gain >= 0 ? 'var(--c-ibkr)' : 'var(--danger)';
+  return `${formatQty(qty)} vnt. · <span style="color:${color}">${sign}${formatEUR(gain)} € (${sign}${formatPct(gainPct)}%)</span>`;
+}
+
+function buildPurchaseRow(pos, lot){
+  const row = document.createElement('div');
+  row.className = 'purchase-row';
+  row.setAttribute('data-lot-id', lot.id);
+
+  const info = document.createElement('div');
+  info.className = 'purchase-info';
+  info.innerHTML = `
+    <div class="purchase-date">${lot.date}</div>
+    <div class="purchase-detail">${formatQty(lot.quantity)} vnt. × ${formatEUR(lot.price)} €</div>
+  `;
+
+  const right = document.createElement('div');
+  right.style.display = 'flex';
+  right.style.alignItems = 'center';
+  right.style.gap = '4px';
+
+  const gainPill = document.createElement('span');
+  gainPill.className = 'gain-pill';
+  setGainPillText(gainPill, pos, lot);
+
+  const delBtn = document.createElement('button');
+  delBtn.className = 'purchase-del';
+  delBtn.setAttribute('aria-label', 'Pašalinti pirkimą');
+  delBtn.textContent = '×';
+  delBtn.addEventListener('click', () => {
+    pos.purchases = pos.purchases.filter(p => p.id !== lot.id);
+    scheduleSave();
+    render();
+  });
+
+  right.appendChild(gainPill);
+  right.appendChild(delBtn);
+
+  row.appendChild(info);
+  row.appendChild(right);
+  return row;
+}
+
+function setGainPillText(el, pos, lot){
+  if(typeof pos.currentPrice !== 'number'){
+    el.textContent = '—';
+    el.style.color = 'var(--ink-faint)';
+    return;
+  }
+  const lotGain = (Number(lot.quantity) || 0) * (pos.currentPrice - (Number(lot.price) || 0));
+  const lotGainPct = lot.price > 0 ? ((pos.currentPrice - lot.price) / lot.price * 100) : 0;
+  const sign = lotGain >= 0 ? '+' : '';
+  el.textContent = `${sign}${formatEUR(lotGain)} € (${sign}${formatPct(lotGainPct)}%)`;
+  el.style.color = lotGain >= 0 ? 'var(--c-ibkr)' : 'var(--danger)';
+}
+
+function updatePositionDisplay(pos){
+  const card = document.querySelector(`.position-card[data-id="${pos.id}"]`);
+  if(card){
+    const valueEl = card.querySelector('.position-value');
+    if(valueEl) valueEl.textContent = formatEUR(positionValue(pos)) + ' €';
+
+    const subEl = card.querySelector('.position-sub');
+    if(subEl) subEl.innerHTML = positionSubText(pos);
+
+    card.querySelectorAll('.purchase-row').forEach(row => {
+      const lotId = row.getAttribute('data-lot-id');
+      const lot = pos.purchases.find(p => p.id === lotId);
+      const gainEl = row.querySelector('.gain-pill');
+      if(lot && gainEl) setGainPillText(gainEl, pos, lot);
+    });
+  }
+
+  refreshTotals();
+}
+
 function buildRow(cat, item){
   const row = document.createElement('div');
   row.className = 'row';
@@ -813,10 +1458,11 @@ function refreshTotals(){
     const cards = document.querySelectorAll('#categories .card');
     const card = cards[idx];
     if(!card) return;
-    const colors = COLORS[cat.id] || COLORS.grynieji;
+    const colors = COLORS[cat.id] || COLORS.pinigai;
     const sub = card.querySelector('.card-subtotal');
     if(sub){
-      sub.textContent = formatEUR(categoryTotal(cat)) + ' €';
+      const val = cat.id === 'ibkr' ? ibkrCardTotal(cat) : categoryTotal(cat);
+      sub.textContent = formatEUR(val) + ' €';
       sub.style.color = colors.fg;
     }
   });
@@ -838,7 +1484,11 @@ function refreshTotals(){
   const legend = document.getElementById('legend');
   legend.innerHTML = '';
 
-  const segments = data.categories.map(cat => ({ name:cat.name, id:cat.id, value:categoryTotal(cat) }));
+  const segments = data.categories.map(cat => ({
+    name:cat.name,
+    id:cat.id,
+    value: cat.id === 'ibkr' ? ibkrCardTotal(cat) : categoryTotal(cat)
+  }));
   segments.push({ name:'Kriptovaliuta', id:'kripto', value:cryptoTotal() });
 
   if(total <= 0){
@@ -848,7 +1498,7 @@ function refreshTotals(){
     const stops = [];
     segments.forEach(seg => {
       if(seg.value <= 0) return;
-      const colors = COLORS[seg.id] || COLORS.grynieji;
+      const colors = COLORS[seg.id] || COLORS.pinigai;
       const start = (acc / total) * 360;
       acc += seg.value;
       const end = (acc / total) * 360;
