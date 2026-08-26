@@ -804,7 +804,7 @@ const defaultData = {
     priceError:false
   },
   ibkrPositions: [
-    { id:cryptoId(), ticker:'VUAA', currentPrice:null, priceUpdatedAt:null, priceError:false, purchases:[] }
+    { id:cryptoId(), ticker:'VUAA.L', currentPrice:null, priceUpdatedAt:null, priceError:false, priceNotFound:true, purchases:[] }
   ],
   lastUpdated:null
 };
@@ -940,43 +940,62 @@ function grandTotal(){
   return data.categories.reduce((s, cat) => s + (cat.id === 'ibkr' ? ibkrCardTotal(cat) : categoryTotal(cat)), 0) + cryptoTotal();
 }
 
-async function fetchAllPositionPrices(){
-  const positions = data.ibkrPositions || [];
-  for(const pos of positions){
-    await fetchPositionPrice(pos, { skipSave:true, skipRender:true });
+let priceFileCache = null;
+let priceFileError = false;
+
+async function loadPriceFile(force){
+  if(priceFileCache && !force) return priceFileCache;
+  try{
+    const res = await fetch('./prices.json', { cache:'no-store' });
+    if(!res.ok) throw new Error('bad response');
+    priceFileCache = await res.json();
+    priceFileError = false;
+  } catch(e){
+    priceFileCache = {};
+    priceFileError = true;
   }
+  return priceFileCache;
+}
+
+async function fetchAllPositionPrices(force){
+  const spinBtns = document.querySelectorAll('.position-card .refresh-btn');
+  spinBtns.forEach(b => b.classList.add('spinning'));
+
+  const prices = await loadPriceFile(force);
+  const positions = data.ibkrPositions || [];
+  positions.forEach(pos => applyPriceFileEntry(pos, prices));
+
+  spinBtns.forEach(b => b.classList.remove('spinning'));
   scheduleSave();
   render();
 }
 
-async function fetchPositionPrice(pos, opts){
-  opts = opts || {};
+async function fetchPositionPrice(pos){
   const btn = document.querySelector(`.position-card[data-id="${pos.id}"] .refresh-btn`);
   if(btn) btn.classList.add('spinning');
 
-  try{
-    const symbol = pos.ticker.trim().toLowerCase() + '.uk';
-    const target = `https://stooq.com/q/l/?s=${encodeURIComponent(symbol)}&f=sd2t2ohlcv&h&e=csv`;
-    const proxied = `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`;
-    const res = await fetch(proxied);
-    if(!res.ok) throw new Error('bad response');
-    const text = await res.text();
-    const lines = text.trim().split('\n');
-    if(lines.length < 2) throw new Error('no data');
-    const cols = lines[1].split(',');
-    const close = parseFloat(cols[6]);
-    if(!isFinite(close) || close <= 0) throw new Error('invalid price');
-
-    pos.currentPrice = close;
-    pos.priceUpdatedAt = new Date().toISOString();
-    pos.priceError = false;
-  } catch(e){
-    pos.priceError = true;
-  }
+  const prices = await loadPriceFile(true);
+  applyPriceFileEntry(pos, prices);
 
   if(btn) btn.classList.remove('spinning');
-  if(!opts.skipSave) scheduleSave();
-  if(!opts.skipRender) render();
+  scheduleSave();
+  render();
+}
+
+function applyPriceFileEntry(pos, prices){
+  const entry = prices[pos.ticker];
+  if(entry && typeof entry.priceEUR === 'number'){
+    pos.currentPrice = entry.priceEUR;
+    pos.priceUpdatedAt = entry.updatedAt || new Date().toISOString();
+    pos.priceError = false;
+    pos.priceNotFound = false;
+  } else if(priceFileError){
+    pos.priceError = true;
+    pos.priceNotFound = false;
+  } else {
+    pos.priceNotFound = true;
+    pos.priceError = false;
+  }
 }
 
 async function fetchPrices(){
@@ -1143,7 +1162,7 @@ function buildIbkrPositionsSection(){
   wrap.className = 'ibkr-divider';
   wrap.innerHTML = `
     <div class="ibkr-divider-label">ETF pozicijos</div>
-    <div class="ibkr-divider-hint">Atskira nuo balanso aukščiau — pridėk konkrečius ETF pirkimus (pvz. VUAA) ir sek jų vertę bei prieaugį.</div>
+    <div class="ibkr-divider-hint">Atskira nuo balanso aukščiau — pridėk konkrečius ETF pirkimus (pvz. VUAA.L) ir sek jų vertę bei prieaugį. Naują tikerį (Yahoo formatu, pvz. VUAA.L) pridėk ir į tickers.json repozitorijoje, kad kaina atsinaujintų automatiškai.</div>
   `;
 
   (data.ibkrPositions || []).forEach(pos => {
@@ -1155,7 +1174,7 @@ function buildIbkrPositionsSection(){
 
   const tickerInput = document.createElement('input');
   tickerInput.className = 'mini-input';
-  tickerInput.placeholder = 'pvz. VUAA';
+  tickerInput.placeholder = 'pvz. VUAA.L';
 
   const addBtn = document.createElement('button');
   addBtn.className = 'mini-btn';
@@ -1238,12 +1257,19 @@ function buildPositionCard(pos){
   body.appendChild(priceField);
 
   const priceStatus = document.createElement('div');
-  priceStatus.className = 'price-hint-small' + (pos.priceError ? ' error' : '');
-  priceStatus.textContent = pos.priceError
-    ? 'Nepavyko automatiškai gauti kainos (bandoma per stooq.com, LSE ETF, tikeris + ".uk"). Gali pataisyti ranka arba spausti ↻.'
-    : (pos.priceUpdatedAt
-        ? 'Kaina gauta automatiškai ' + new Date(pos.priceUpdatedAt).toLocaleTimeString('lt-LT', { hour:'2-digit', minute:'2-digit' })
-        : 'Gaunama kaina...');
+  priceStatus.className = 'price-hint-small' + ((pos.priceError || pos.priceNotFound) ? ' error' : '');
+  if(pos.priceError){
+    priceStatus.textContent = 'Nepavyko įkelti prices.json. Patikrink, ar failas yra repozitorijoje šalia index.html.';
+  } else if(pos.priceNotFound){
+    priceStatus.textContent = `„${pos.ticker}" nerastas prices.json faile. Pridėk jį į tickers.json ir paleisk workflow — arba įvesk kainą ranka.`;
+  } else if(pos.priceUpdatedAt){
+    priceStatus.textContent = 'Kaina atnaujinta automatiškai ' +
+      new Date(pos.priceUpdatedAt).toLocaleDateString('lt-LT', { day:'2-digit', month:'2-digit' }) + ' ' +
+      new Date(pos.priceUpdatedAt).toLocaleTimeString('lt-LT', { hour:'2-digit', minute:'2-digit' }) +
+      ' (GitHub Action).';
+  } else {
+    priceStatus.textContent = 'Ieškoma kainos...';
+  }
   body.appendChild(priceStatus);
 
   const purchasesLabel = document.createElement('div');
